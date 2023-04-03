@@ -29,18 +29,6 @@ public class CustomerService {
         customerRepository.persist(mapCustomerDtoToEntity(customerDTO));
     }
 
-    private CustomerDTO mapCustomerEntityToDTO(CustomerEntity customer) {
-        CustomerDTO customerDTO = new CustomerDTO();
-
-        customerDTO.setAddress(customer.getAddress());
-        customerDTO.setAge(customer.getAge());
-        customerDTO.setEmail(customer.getEmail());
-        customerDTO.setName(customer.getName());
-        customerDTO.setPhone(customer.getPhone());
-
-        return customerDTO;
-    }
-
     public void changeCustomer(Long id, CustomerDTO customerDTO) {
 
         CustomerEntity customer = customerRepository.findById(id);
@@ -58,9 +46,27 @@ public class CustomerService {
         customerRepository.deleteById(id);
     }
 
+    public CustomerDTO findCustomerById(Long id) {
+        return mapCustomerEntityToDTO(customerRepository.findById(id));
+    }
+
+    private CustomerDTO mapCustomerEntityToDTO(CustomerEntity customer) {
+        CustomerDTO customerDTO = new CustomerDTO();
+
+        customerDTO.setId(customer.getId());
+        customerDTO.setAddress(customer.getAddress());
+        customerDTO.setAge(customer.getAge());
+        customerDTO.setEmail(customer.getEmail());
+        customerDTO.setName(customer.getName());
+        customerDTO.setPhone(customer.getPhone());
+
+        return customerDTO;
+    }
+
     private CustomerEntity mapCustomerDtoToEntity(CustomerDTO customer) {
         CustomerEntity customerEntity = new CustomerEntity();
 
+        customerEntity.setId(customer.getId());
         customerEntity.setAddress(customer.getAddress());
         customerEntity.setAge(customer.getAge());
         customerEntity.setEmail(customer.getEmail());
@@ -69,5 +75,6 @@ public class CustomerService {
 
         return customerEntity;
     }
+
 
 }

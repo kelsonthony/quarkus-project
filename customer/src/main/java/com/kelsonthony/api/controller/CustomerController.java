@@ -3,6 +3,7 @@ package com.kelsonthony.api.controller;
 import com.kelsonthony.api.dto.CustomerDTO;
 import com.kelsonthony.domain.service.CustomerService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -19,9 +20,17 @@ public class CustomerController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<CustomerDTO> findAllCustomers() {
+
         return customerService.findAllCustomers();
     }
 
+    @GET
+
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public CustomerDTO findCustomerById(@PathParam("id") Long id) {
+        return customerService.findCustomerById(id);
+    }
     @POST
     @Transactional
     public Response saveCustomer(CustomerDTO customerDTO) {
